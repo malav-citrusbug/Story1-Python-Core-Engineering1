@@ -32,16 +32,7 @@ logger2 = setup_logger('second_logger', 'success.log')
 
 
 
-class InvalidAgeError(Exception):
-    def __init__(self, age, msg="Age must be between 0 and 120"):
-        self.age = age
-        self.msg = msg
-        logger1.error('MustBe18YearOldException: Valid Age must be between 0 and 120, input age {}'.format(self.age))
-        super().__init__(self.msg)
-
-    def __str__(self):
-        return f'{self.age} -> {self.msg}'
-class MustBe18YearOldException(Exception):
+class InvalidNameException(Exception):
     def __init__(self, name, msg="Name must be between 3 and 8 Characters"):
         self.name = name
         self.msg = msg
@@ -52,10 +43,21 @@ class MustBe18YearOldException(Exception):
     def __str__(self):
         return f'{self.name} -> {self.msg}'        
 
+
+class MustBe18YearOldException(Exception):
+    def __init__(self, age, msg="Age must be between 0 and 120"):
+        self.age = age
+        self.msg = msg
+        logger1.error('MustBe18YearOldException: Valid Age must be between 0 and 120, input age {}'.format(self.age))
+        super().__init__(self.msg)
+
+    def __str__(self):
+        return f'{self.age} -> {self.msg}'
+
 # Step 2: Use the custom exception in your code
 def set_age_name(age,name):
-    if age < 0 or age > 120:
-        raise InvalidAgeError(age)
+    if age <= 18:
+        raise InvalidNameException(age)
         
    
            
@@ -80,7 +82,7 @@ while(n!=1):
        age1=int(input("Enter Age --> "))
        name1=str(input("Enter Name --> "))
        set_age_name(age1,name1)  # This will raise the custom exception
-    except InvalidAgeError as e:
+    except InvalidNameException as e:
 
         print(e)
     except MustBe18YearOldException as ve:
