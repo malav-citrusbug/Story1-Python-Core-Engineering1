@@ -1,0 +1,7 @@
+[{"user_id": 857555, "amount": 1200, "discount": 120.0, "ts": 1772786881.5518801}, 
+{"user_id": 703480, "amount": 300, "discount": 0, "ts": 1772786881.875566},
+ {"user_id": 390810, "amount": 0, "discount": 0, "ts": 1772786882.159695},
+  {"user_id": 892551, "amount": 50, "discount": 0, "ts": 1772786882.433153},
+   {"user_id": 154200, "amount": 400, "discount": 0, "ts": 1772786882.7049656},
+    {"user_id": 346425, "amount": 150, "discount": 0, "ts": 1772786882.987823},
+     {"user_id": 3209, "amount": 800, "discount": 40.0, "ts": 1772786883.266191}]
