@@ -54,39 +54,71 @@ class MustBe18YearOldException(Exception):
     def __str__(self):
         return f'{self.age} -> {self.msg}'
 
+class BothError(Exception):
+    def __init__(self, age,name, msg="Age must be between 0 and 120",msg1="Name must be between 3 and 8 Characters"):
+        self.age = age
+        self.name=name
+        self.msg = msg
+        self.msg1=msg1
+       
+        logger1.error('InvalidNameException: Valid name should be length of 3-8 chars, input name {}'.format(self.name)) 
+        logger1.error('MustBe18YearOldException: Valid Age must be between 0 and 120, input age {}'.format(self.age))
+        super().__init__(self.msg,self.msg1)
+
+    def __str__(self):
+        return f'{self.age} -> {self.msg}\n{self.name} -> {self.msg1}'
+        
+
+
+
 # Step 2: Use the custom exception in your code
 def set_age_name(age,name):
-    if age <= 18:
-        raise InvalidNameException(age)
+    if (age <= 18) and (len(name)>=3 and len(name)<=8):
+        raise  MustBe18YearOldException(age) 
         
    
            
-    elif len(name)<3 or len(name)>8:
-        raise MustBe18YearOldException(name)
+    elif (len(name)<3 or len(name)>8) and (age>18):
+        raise InvalidNameException(name)
+    elif (age <= 18) and (len(name)<3 or len(name)>8):
+        raise BothError(age,name) 
         
     else:
-        print()
-        print(f"Name set to: {name}") 
-        print(f"Age set to: {age}") 
-        print()
-        a[name]=age
-        print(a)
-        logger2.info('Name {} is Validated'.format(name))     
+        if name in list(a.keys()):
+            print("Name Already Exists")
+        else:
+            print()
+            print(f"Name set to: {name}") 
+            print(f"Age set to: {age}") 
+            print()
+            a[name]=age
+            print(a)
+            logger2.info('Name {} is Validated'.format(name))     
     
 a={}
 n=0
 # Step 3: Handling the custom exception
 while(n!=1):
-    try:
+    if n==0:
+        try:
+            age1=int(input("Enter Age --> "))
+            name1=str(input("Enter Name --> "))
+            set_age_name(age1,name1)  # This will raise the custom exception
+        except InvalidNameException as e:
+            print(e)
+        except MustBe18YearOldException as ve:
+            print(ve)
+        except BothError as v1:
+            print(v1)
+            
 
-       age1=int(input("Enter Age --> "))
-       name1=str(input("Enter Name --> "))
-       set_age_name(age1,name1)  # This will raise the custom exception
-    except InvalidNameException as e:
+                
+        n=int(input("Enter 0 To Continue And 1 To Exit --> "))    
+    
+    else:
+        print("Please Enter Valid Input")
+        n=int(input("Enter 0 To Continue And 1 To Exit --> "))    
 
-        print(e)
-    except MustBe18YearOldException as ve:
-        print(ve)
-    n=int(input("Enter 0 To Continue And 1 To Exit --> "))    
 
+    
     
